@@ -79,7 +79,7 @@ label, .stNumberInput label, .stSelectbox label{ font-weight:600 !important; fon
 # ============================================================
 @st.cache_resource
 def load_model():
-    model = joblib.load("heart/heart_disease_model.joblib")
+    model = joblib.load("heart/heart_disease_modell.joblib")
     with open("heart/column_config.json") as f:
         config = json.load(f)
     return model, config
