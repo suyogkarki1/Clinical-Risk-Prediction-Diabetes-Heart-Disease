@@ -183,8 +183,8 @@ if submitted:
     proba = None
     try:
         proba = model.predict_proba(input_df)[0]
-    except AttributeError:
-        pass
+    except Exception as e:
+        st.warning(f"Probability unavailable: {e}")
 
     if prediction == 1:
         state_class, verdict = "higher", "Higher likelihood of heart disease"
