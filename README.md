@@ -28,10 +28,11 @@ Metrics reported on the held-out test set.
 | Metric | Score |
 |--------|-------|
 | Accuracy | 0.73 |
+| Precision | 0.60 |
 | Recall | 0.72 |
 | F1 Score | 0.65 |
 | ROC-AUC | 0.81 |
-| PR-AUC | 0.81 |
+| PR-AUC | 0.65 |
 
 **Heart Disease — Hard Voting Ensemble** (Logistic Regression, Random Forest, Gradient Boosting, AdaBoost, SVC, Decision Tree)
 
