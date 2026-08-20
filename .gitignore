@@ -9,7 +9,7 @@ venv.bak/
 # ===== Model / data artifacts =====
 *.pkl
 *.joblib
-!heart/heart_disease_model.joblib
+!heart/heart_disease_modell.joblib
 !diabetes/diabetes_pipeline.joblib
 *.h5
 *.model
