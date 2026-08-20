@@ -79,7 +79,7 @@ label, .stNumberInput label, .stSelectbox label{ font-weight:600 !important; fon
 # ============================================================
 @st.cache_resource
 def load_model():
-    model = joblib.load("heart/heart_disease_modell.joblib")
+    model = joblib.load("heart/heart_disease_model.joblib")
     with open("heart/column_config.json") as f:
         config = json.load(f)
     return model, config
@@ -198,27 +198,12 @@ if submitted:
     if proba is not None:
         pct = proba[1] * 100
         bar_color = "var(--crimson)" if prediction == 1 else "var(--ecg)"
-        meter_html = f"""
-          <div class="meter">
-            <div class="row"><span>ESTIMATED RISK</span><span>{pct:.0f}%</span></div>
-            <div class="track"><div class="fill" style="width:{pct:.0f}%;background:{bar_color};"></div></div>
-          </div>"""
+        meter_html = f'<div class="meter"><div class="row"><span>ESTIMATED RISK</span><span>{pct:.0f}%</span></div><div class="track"><div class="fill" style="width:{pct:.0f}%;background:{bar_color};"></div></div></div>'
     else:
         meter_html = ""
 
-    st.markdown(f"""
-    <div class="result {state_class}">
-      <p class="verdict">{verdict}</p>
-      <p class="sub">{sub}</p>
-      {meter_html}
-      <div class="tiles">
-        <div class="tile"><div class="k">Age</div><div class="v">{age}</div></div>
-        <div class="tile"><div class="k">Resting BP</div><div class="v">{trestbps}</div></div>
-        <div class="tile"><div class="k">Cholesterol</div><div class="v">{chol}</div></div>
-        <div class="tile"><div class="k">Max HR</div><div class="v">{thalach}</div></div>
-      </div>
-    </div>
-    """, unsafe_allow_html=True)
+    result_html = f'<div class="result {state_class}"><p class="verdict">{verdict}</p><p class="sub">{sub}</p>{meter_html}<div class="tiles"><div class="tile"><div class="k">Age</div><div class="v">{age}</div></div><div class="tile"><div class="k">Resting BP</div><div class="v">{trestbps}</div></div><div class="tile"><div class="k">Cholesterol</div><div class="v">{chol}</div></div><div class="tile"><div class="k">Max HR</div><div class="v">{thalach}</div></div></div></div>'
+    st.markdown(result_html, unsafe_allow_html=True)
 
     with st.expander("See everything you entered"):
         st.dataframe(input_df.T.rename(columns={0: "Value"}), use_container_width=True)
