@@ -1,0 +1,27 @@
+{
+  "num_col": [
+    "age",
+    "trestbps",
+    "chol",
+    "thalach",
+    "oldpeak",
+    "thalach_age_ratio",
+    "pressure_rate_product"
+  ],
+  "bin_col": [
+    "sex",
+    "fbs",
+    "exang",
+    "high_risk_age"
+  ],
+  "cat_col": [
+    "cp",
+    "restecg",
+    "slope",
+    "thal",
+    "age_group",
+    "chol_group",
+    "bp_group"
+  ],
+  "target_col": "target"
+}
