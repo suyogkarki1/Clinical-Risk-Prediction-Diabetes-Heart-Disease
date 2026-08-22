@@ -34,18 +34,20 @@ Metrics reported on the held-out test set.
 | ROC-AUC | 0.81 |
 | PR-AUC | 0.65 |
 
-**Heart Disease — Hard Voting Ensemble** (Logistic Regression, Random Forest, Gradient Boosting, AdaBoost, SVC, Decision Tree)
+**Heart Disease — Random Forest (tuned)**
 
 | Metric | Score |
 |--------|-------|
 | Accuracy | 0.79 |
 | Precision | 0.83 |
-| Recall | 0.75 |
+| Recall | 0.76 |
 | F1 Score | 0.79 |
+| ROC-AUC | 0.86 |
+| Log Loss | 0.48 |
 
-\*ROC-AUC measured on the soft-voting variant, which exposes probabilities.
+Random Forest was chosen as the final heart-disease model for its strong test accuracy, the smallest train–test gap (~0.07, indicating good generalization), and its built-in probability estimates — used to power the risk meter in the web app.
 
-Because both are medical screening problems, **recall and PR-AUC** are emphasized over plain accuracy — catching true cases matters more than overall correctness.
+Because both are medical screening problems, **recall** is emphasized alongside accuracy — catching true cases matters more than overall correctness.
 
 ---
 
@@ -58,9 +60,10 @@ Because both are medical screening problems, **recall and PR-AUC** are emphasize
 - Class imbalance handled with `class_weight='balanced'` across models.
 
 **Modeling & Evaluation**
-- Six models compared via 5-fold stratified cross-validation.
-- Hyperparameters tuned with `GridSearchCV`, scored on PR-AUC.
-- Final model selected per task; evaluated with accuracy, balanced accuracy, precision, recall, F1, ROC-AUC, PR-AUC, and a confusion matrix.
+- Six models compared via 5-fold stratified cross-validation (Logistic Regression, Random Forest, Gradient Boosting, AdaBoost, SVC, Decision Tree).
+- Hyperparameters tuned with `GridSearchCV`.
+- Final model selected per task; evaluated with accuracy, balanced accuracy, precision, recall, F1, ROC-AUC, and a confusion matrix.
+- Overfitting checked by comparing train vs test accuracy — the tuned models show small, healthy gaps.
 
 ---
 
@@ -69,14 +72,16 @@ Because both are medical screening problems, **recall and PR-AUC** are emphasize
 ```
 Clinical-Risk-Prediction/
 ├── app.py                          # Streamlit entry point
-├── pages/                          # additional app pages
+├── pages/
+│   ├── 1_Heart_Disease.py          # heart disease prediction page
+│   └── 2_Diabetes.py               # diabetes prediction page
 ├── dataset/                        # source CSVs
 ├── diabetes/
 │   ├── diabetes_pipeline.joblib    # saved model + preprocessing
 │   └── diabetes_column_config.json # feature names + order
 ├── heart/
-│   ├── heart_disease_model.joblib
-│   └── column_config.json
+│   ├── heart_disease_model.joblib  # saved Random Forest + preprocessing
+│   └── column_config.json          # feature names + order
 ├── requirements.txt
 └── README.md
 ```
